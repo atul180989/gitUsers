@@ -47,6 +47,7 @@ class BaseViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         filteredArray = usersArray
+        filteredUserDetailsArray = userdetailsArray
         usersTable.reloadData()
     }
     

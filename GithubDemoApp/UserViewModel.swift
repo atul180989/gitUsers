@@ -17,7 +17,7 @@ class UserViewModel: UserViewModelServiceProtocol {
                 if let jsonData = try? JSONDecoder().decode([User].self, from: data) {
                     completion((jsonData, nil))
                 } else {
-                    completion(([],.decodingError))
+                    completion(([],.limitExceedingError))
                 }
             case .failure(let error):
                 completion(([], error))
@@ -33,7 +33,7 @@ class UserViewModel: UserViewModelServiceProtocol {
                 if let jsonData = try? JSONDecoder().decode(UserDetails.self, from: data) {
                     completion((jsonData, nil))
                 } else {
-                    completion((nil,.decodingError))
+                    completion((nil,.limitExceedingError))
                 }
             case .failure(let error):
                 completion((nil, error))
@@ -48,7 +48,7 @@ class UserViewModel: UserViewModelServiceProtocol {
                 if let jsonData = try? JSONDecoder().decode([UserRepositoryDetails].self, from: data) {
                     completion((jsonData, nil))
                 } else {
-                    completion((nil,.decodingError))
+                    completion((nil,.limitExceedingError))
                 }
             case .failure(let error):
                 completion((nil, error))

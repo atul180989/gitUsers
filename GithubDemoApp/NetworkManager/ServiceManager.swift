@@ -13,12 +13,12 @@ let baseAPIURL = "https://api.github.com/users"
 
 enum NetworkError: Error {
     case domainError
-    case decodingError
+    case limitExceedingError
     
     var description : String {
         switch self {
-        case .decodingError:
-            return "Decoding Error"
+        case .limitExceedingError:
+            return "Daily Limit Exceeded to fetch API Data"
         case .domainError:
             return "Domain Error"
         }
@@ -48,7 +48,7 @@ class ServiceManager {
     func getURLRequest(url: URL) -> URLRequest {
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
-        request.setValue("token 37c5d41c7669241e5b422f5687d611c021cb1ac8", forHTTPHeaderField: "Authorization")
+        request.setValue("token 4ac7925fd75f7d4ea0b00cf343eee778eb5d6b98", forHTTPHeaderField: "Authorization")
         return request
     }
 }
