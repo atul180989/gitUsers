@@ -12,16 +12,13 @@ import UIKit
 enum NetworkError: Error {
     case domainError
     case decodingError
-    case none
     
     var description : String {
         switch self {
         case .decodingError:
             return "Decoding Error"
-        case .none:
-            return "No Error"
         case .domainError:
-        return "Domain Error"
+            return "Domain Error"
         }
     }
     
@@ -51,7 +48,7 @@ class ServiceManager {
             switch result {
             case .success(let data):
                 if let jsonData = try? JSONDecoder().decode([User].self, from: data) {
-                    completion((jsonData, NetworkError.none))
+                    completion((jsonData, nil))
                 } else {
                     completion(([],.decodingError))
                 }
@@ -67,7 +64,7 @@ class ServiceManager {
             switch result {
             case .success(let data):
                 if let jsonData = try? JSONDecoder().decode(UserDetails.self, from: data) {
-                    completion((jsonData, NetworkError.none))
+                    completion((jsonData, nil))
                 } else {
                     completion((nil,.decodingError))
                 }
@@ -82,7 +79,7 @@ class ServiceManager {
             switch result {
             case .success(let data):
                 if let jsonData = try? JSONDecoder().decode([UserRepositoryDetails].self, from: data) {
-                    completion((jsonData, NetworkError.none))
+                    completion((jsonData, nil))
                 } else {
                     completion((nil,.decodingError))
                 }
@@ -91,5 +88,4 @@ class ServiceManager {
             }
         }
     }
-
 }
