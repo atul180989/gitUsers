@@ -54,7 +54,7 @@ class UserDetailViewController: UIViewController {
         }
         self.usernameLabel.text = userDetails?.login
         self.bioLabel.text = userDetails?.bio ?? "Not Available"
-        self.locationLabel.text = userDetails?.location
+        self.locationLabel.text = userDetails?.location ?? "Not Available"
         self.followersLabel.text = "\(userDetails?.followers ?? 0)"
         self.followingLabel.text = "\(userDetails?.following ?? 0)"
         self.emailLabel.text = userDetails?.email ?? "Not Available"

@@ -48,7 +48,7 @@ class ServiceManager {
     func getURLRequest(url: URL) -> URLRequest {
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
-        request.setValue("token 5a98b01b7b63549fe7ec4f4b3cd0309fabfdf877", forHTTPHeaderField: "Authorization")
+        request.setValue("token 37c5d41c7669241e5b422f5687d611c021cb1ac8", forHTTPHeaderField: "Authorization")
         return request
     }
 }

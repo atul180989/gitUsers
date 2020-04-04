@@ -48,7 +48,6 @@ class BaseViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         filteredArray = usersArray
         usersTable.reloadData()
-        searchBar.searchTextField.text = ""
     }
     
     private func fetchUsers() {
@@ -131,13 +130,6 @@ extension BaseViewController: UITableViewDataSource {
                 DispatchQueue.main.async {
                     cell.userImageView.image = image
                 }
-            }
-        }
-        DispatchQueue.global(qos: .background).async {
-            guard let imageURL = self.filteredArray[indexPath.row].avatar_url, let url = URL(string:(imageURL)), let data = try? Data(contentsOf: url), let image: UIImage = UIImage(data: data) else { return }
-            self.imageCache.setObject(image, forKey: NSString(string: (self.filteredArray[indexPath.row].login!)))
-            DispatchQueue.main.async {
-                cell.userImageView.image = image
             }
         }
         return cell
