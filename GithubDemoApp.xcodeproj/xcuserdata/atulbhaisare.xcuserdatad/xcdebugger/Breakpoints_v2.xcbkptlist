@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "D3055550-DF4E-475F-B883-AC716A19FB97"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "760FDEBF-8203-4073-B0BB-73BFD580CD20"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "GithubDemoApp/UserDetailViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "39"
+            endingLineNumber = "39"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "760FDEBF-8203-4073-B0BB-73BFD580CD20 - 65279b96f009f28e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;GithubDemoApp.UserDetails&gt;, GithubDemoApp.NetworkError) -&gt; () in GithubDemoApp.UserDetailViewController.viewDidLoad() -&gt; ()"
+                  moduleName = "GithubDemoApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/atulbhaisare/Documents/TMobile/GithubDemoApp/GithubDemoApp/UserDetailViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "39"
+                  endingLineNumber = "39"
+                  offsetFromSymbolStart = "298">
+               </Location>
+               <Location
+                  uuid = "760FDEBF-8203-4073-B0BB-73BFD580CD20 - 3f9ab75552d1829b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in closure #1 (Swift.Optional&lt;GithubDemoApp.UserDetails&gt;, GithubDemoApp.NetworkError) -&gt; () in GithubDemoApp.UserDetailViewController.viewDidLoad() -&gt; ()"
+                  moduleName = "GithubDemoApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/atulbhaisare/Documents/TMobile/GithubDemoApp/GithubDemoApp/UserDetailViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40"
+                  offsetFromSymbolStart = "393">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
