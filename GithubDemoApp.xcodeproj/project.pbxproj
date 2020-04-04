@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		BD7717822437D49F00633D18 /* UserDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7717812437D49F00633D18 /* UserDetailViewController.swift */; };
+		BD8621E62438A2F5000527FF /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8621E52438A2F5000527FF /* UserViewModel.swift */; };
 		BD9FE83E2437A38300D65933 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9FE83D2437A38300D65933 /* AppDelegate.swift */; };
 		BD9FE8402437A38300D65933 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9FE83F2437A38300D65933 /* SceneDelegate.swift */; };
 		BD9FE8452437A38300D65933 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BD9FE8432437A38300D65933 /* Main.storyboard */; };
@@ -31,6 +32,7 @@
 
 /* Begin PBXFileReference section */
 		BD7717812437D49F00633D18 /* UserDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailViewController.swift; sourceTree = "<group>"; };
+		BD8621E52438A2F5000527FF /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		BD9FE83A2437A38300D65933 /* GithubDemoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GithubDemoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD9FE83D2437A38300D65933 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BD9FE83F2437A38300D65933 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 			children = (
 				BD9FE83D2437A38300D65933 /* AppDelegate.swift */,
 				BD9FE83F2437A38300D65933 /* SceneDelegate.swift */,
+				BD8621E52438A2F5000527FF /* UserViewModel.swift */,
 				BD8621E22438A11D000527FF /* NetworkManager */,
 				BD8621E12438A110000527FF /* Model */,
 				BD8621E42438A157000527FF /* Views */,
@@ -246,6 +249,7 @@
 				BD7717822437D49F00633D18 /* UserDetailViewController.swift in Sources */,
 				BD9FE8622437B91E00D65933 /* UserModel.swift in Sources */,
 				BD9FE8402437A38300D65933 /* SceneDelegate.swift in Sources */,
+				BD8621E62438A2F5000527FF /* UserViewModel.swift in Sources */,
 				BD9FE8642437BBD100D65933 /* ServiceManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

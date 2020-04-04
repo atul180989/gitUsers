@@ -33,12 +33,16 @@ class UserDetailViewController: UIViewController {
     var reposURL: String?
     var userName: String?
     var userDetails: UserDetails?
+    var viewModel: UserViewModel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel = UserViewModel()
         self.userImageView.layer.cornerRadius = 10
         self.userImageView.layer.masksToBounds = true
         updateUserDetails()
         fetchUserRepoDetails()
+        
     }
     
     // Display User Details
@@ -61,11 +65,14 @@ class UserDetailViewController: UIViewController {
     // Fetch Repo Details
     private func fetchUserRepoDetails() {
         self.activityIndicator.startAnimating()
-        ServiceManager().fetchRepoDetails(repoURLString: reposURL!) { (result , error) in
+        viewModel.fetchRepoDetails(repoURLString: reposURL!) { (result , error) in
             if error != nil {
                 // Show Alert View
-                self.activityIndicator.stopAnimating()
-                self.showAlert(message: error?.description)
+    
+                DispatchQueue.main.async {
+                    self.activityIndicator.stopAnimating()
+                    self.showAlert(message: error?.description)
+                }
             } else {
                 if let repoArray = result {
                     self.filteredRepoArray = repoArray

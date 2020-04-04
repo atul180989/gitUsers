@@ -9,6 +9,8 @@
 import Foundation
 import UIKit
 
+let baseAPIURL = "https://api.github.com/users"
+
 enum NetworkError: Error {
     case domainError
     case decodingError
@@ -26,13 +28,13 @@ enum NetworkError: Error {
 
 class ServiceManager {
     public static let sharedInstance = ServiceManager()
+    private init () {}
     
     func getApiResult(url:String, completion: @escaping (Result<Data, NetworkError>) -> Void ) {
         guard let newURL = URL(string: url) else { return }
-        var request = URLRequest(url: newURL)
-        request.addValue("token 235a62b01cedb05ec13ea260e61c422f5bba8481", forHTTPHeaderField: "Authorization")
+        let request = ServiceManager.sharedInstance.getURLRequest(url: newURL)
         URLSession.shared.dataTask(with: request) { (data, response, error) in
-            
+        
             guard let data = data, error == nil else {
                 if let error = error as NSError?, error.domain == NSURLErrorDomain {
                     completion(.failure(.domainError))
@@ -43,51 +45,10 @@ class ServiceManager {
         }.resume()
     }
     
-    
-    func fetchUsers(completion: @escaping (([User], NetworkError?))-> Void) {
-        let urlForUsers = "https://api.github.com/users"
-        getApiResult(url: urlForUsers) { (result) in
-            switch result {
-            case .success(let data):
-                if let jsonData = try? JSONDecoder().decode([User].self, from: data) {
-                    completion((jsonData, nil))
-                } else {
-                    completion(([],.decodingError))
-                }
-            case .failure(let error):
-                completion(([], error))
-            }
-        }
-    }
-    
-    func fetchUserDetails(username: String, completion: @escaping ((UserDetails?, NetworkError?))-> Void) {
-        let userDetailURL = "https://api.github.com/users/\(username)"
-        getApiResult(url: userDetailURL) { (result) in
-            switch result {
-            case .success(let data):
-                if let jsonData = try? JSONDecoder().decode(UserDetails.self, from: data) {
-                    completion((jsonData, nil))
-                } else {
-                    completion((nil,.decodingError))
-                }
-            case .failure(let error):
-                completion((nil, error))
-            }
-        }
-    }
-    
-    func fetchRepoDetails(repoURLString: String, completion: @escaping (([UserRepositoryDetails]?, NetworkError?))-> Void) {
-        getApiResult(url: repoURLString) { (result) in
-            switch result {
-            case .success(let data):
-                if let jsonData = try? JSONDecoder().decode([UserRepositoryDetails].self, from: data) {
-                    completion((jsonData, nil))
-                } else {
-                    completion((nil,.decodingError))
-                }
-            case .failure(let error):
-                completion((nil, error))
-            }
-        }
+    func getURLRequest(url: URL) -> URLRequest {
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("token 94524376abfeef1b51131ae4cdb3e1078e0befab", forHTTPHeaderField: "Authorization")
+        return request
     }
 }

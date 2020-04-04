@@ -35,8 +35,11 @@ class BaseViewController: UIViewController {
     var userdetailsArray: [UserDetails] = []
     var filteredUserDetailsArray: [UserDetails] = []
     let imageCache = NSCache<NSString, UIImage>()
+    var viewModel: UserViewModel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel = UserViewModel()
         fetchUsers()
         self.title = "GitHub Users"
         searchBar.placeholder = "Search User"
@@ -50,10 +53,12 @@ class BaseViewController: UIViewController {
     
     private func fetchUsers() {
         activityIndicator.startAnimating()
-        ServiceManager().fetchUsers { (users, error) in
+        viewModel.fetchUsers { (users, error) in
             if error != nil {
                 // Show Alert View
-                self.showAlert(message: error?.description)
+                DispatchQueue.main.async {
+                    self.showAlert(message: error?.description)
+                }
             } else {
                 self.usersArray = users
                 self.filteredArray = users
@@ -67,11 +72,13 @@ class BaseViewController: UIViewController {
         for user in filteredArray {
             myGroup.enter()
             guard let userName = user.login else { return }
-            ServiceManager.sharedInstance.fetchUserDetails(username: userName) { (userDetails, error) in
+            viewModel.fetchUserDetails(username: userName) { (userDetails, error) in
                 if error != nil {
                     // Show Alert View
-                    self.activityIndicator.stopAnimating()
-                    self.showAlert(message: error?.description)
+                    DispatchQueue.main.async {
+                        self.activityIndicator.stopAnimating()
+                        self.showAlert(message: error?.description)
+                    }
                 } else {
                     guard let userInfo = userDetails else { return }
                     self.userdetailsArray.append(userInfo)
@@ -140,7 +147,7 @@ extension BaseViewController: UITableViewDataSource {
 extension BaseViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-     
+        
         guard let detailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserDetailViewController") as? UserDetailViewController else { return }
         detailViewController.reposURL = filteredArray[indexPath.row].repos_url
         detailViewController.userName = filteredArray[indexPath.row].login
@@ -150,7 +157,7 @@ extension BaseViewController: UITableViewDelegate {
 }
 
 extension UIViewController {
-     func showAlert(message: String?) {
+    func showAlert(message: String?) {
         let alertController = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         alertController.addAction(okAction)
