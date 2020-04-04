@@ -23,65 +23,65 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "953DD7D4-77D5-4BD0-B7FD-F4F32B1D2195"
+            uuid = "5B0EABC2-8B4F-42C2-BE4B-A5C5C6FD5F0C"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "GithubDemoAppTests/GithubDemoAppTests.swift"
+            filePath = "GithubDemoApp/ViewControllers/UserDetailViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "37"
-            endingLineNumber = "37"
-            landmarkName = "GithubDemoAppTests"
-            landmarkType = "3">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "AB5482FB-4149-4464-AE9B-9FA5E89A822A"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "GithubDemoAppTests/GithubDemoAppTests.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "47"
-            endingLineNumber = "47"
-            landmarkName = "GithubDemoAppTests"
-            landmarkType = "3">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "31922E79-0988-4D56-9AE9-6B5C3D4BD3CD"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "GithubDemoAppTests/GithubDemoAppTests.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "42"
-            endingLineNumber = "42"
-            landmarkName = "GithubDemoAppTests"
-            landmarkType = "3">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "9A503419-C27D-472F-8126-B4E9A3C36CB9"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "GithubDemoApp/UserViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "17"
-            endingLineNumber = "17"
-            landmarkName = "fetchUsers(completion:)"
+            startingLineNumber = "44"
+            endingLineNumber = "44"
+            landmarkName = "viewDidLoad()"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F71C089D-B5D8-4485-BB7E-30E76502E8AD"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "GithubDemoApp/ViewControllers/UserDetailViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "67"
+            endingLineNumber = "67"
+            landmarkName = "fetchUserRepoDetails()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "F71C089D-B5D8-4485-BB7E-30E76502E8AD - 8d606d4f63ff3629"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "GithubDemoApp.UserDetailViewController.(fetchUserRepoDetails in _9D87880822497F20B4D76B08D40FBC91)() -&gt; ()"
+                  moduleName = "GithubDemoApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/atulbhaisare/Documents/TMobile/GithubDemoApp/GithubDemoApp/ViewControllers/UserDetailViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "67"
+                  endingLineNumber = "67"
+                  offsetFromSymbolStart = "253">
+               </Location>
+               <Location
+                  uuid = "F71C089D-B5D8-4485-BB7E-30E76502E8AD - b8016ded610c38d8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;Swift.Array&lt;GithubDemoApp.UserRepositoryDetails&gt;&gt;, Swift.Optional&lt;GithubDemoApp.NetworkError&gt;) -&gt; () in GithubDemoApp.UserDetailViewController.(fetchUserRepoDetails in _9D87880822497F20B4D76B08D40FBC91)() -&gt; ()"
+                  moduleName = "GithubDemoApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/atulbhaisare/Documents/TMobile/GithubDemoApp/GithubDemoApp/ViewControllers/UserDetailViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "68"
+                  endingLineNumber = "68"
+                  offsetFromSymbolStart = "212">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -41,8 +41,7 @@ class UserDetailViewController: UIViewController {
         self.userImageView.layer.cornerRadius = 10
         self.userImageView.layer.masksToBounds = true
         updateUserDetails()
-        fetchUserRepoDetails()
-        
+        fetchUserRepoDetails()        
     }
     
     // Display User Details

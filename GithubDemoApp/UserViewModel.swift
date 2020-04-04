@@ -8,7 +8,7 @@
 
 import Foundation
 
-class UserViewModel {
+class UserViewModel: UserViewModelServiceProtocol {
     
     func fetchUsers(completion: @escaping (([User], NetworkError?))-> Void) {
         ServiceManager.sharedInstance.getApiResult(url: baseAPIURL) { (result) in
@@ -57,8 +57,8 @@ class UserViewModel {
     }
 }
 
-//protocol UserViewModelServiceProtocol : class {
-//    func fetchRepoDetails(repoURLString: String, completion: @escaping (([UserRepositoryDetails]?, NetworkError?))-> Void)
-//    func fetchUserDetails(username: String, completion: @escaping ((UserDetails?, NetworkError?))-> Void)
-//    func fetchUsers(completion: @escaping (([User], NetworkError?))-> Void)
-//}
+protocol UserViewModelServiceProtocol : class {
+    func fetchRepoDetails(repoURLString: String, completion: @escaping (([UserRepositoryDetails]?, NetworkError?))-> Void)
+    func fetchUserDetails(username: String, completion: @escaping ((UserDetails?, NetworkError?))-> Void)
+    func fetchUsers(completion: @escaping (([User], NetworkError?))-> Void)
+}
