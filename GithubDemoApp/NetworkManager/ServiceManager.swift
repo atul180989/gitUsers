@@ -29,11 +29,13 @@ class ServiceManager {
     
     func getApiResult(url:String, completion: @escaping (Result<Data, NetworkError>) -> Void ) {
         guard let newURL = URL(string: url) else { return }
-        URLSession.shared.dataTask(with: newURL) { (data, response, error) in
+        var request = URLRequest(url: newURL)
+        request.addValue("token 235a62b01cedb05ec13ea260e61c422f5bba8481", forHTTPHeaderField: "Authorization")
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
             
             guard let data = data, error == nil else {
                 if let error = error as NSError?, error.domain == NSURLErrorDomain {
-                        completion(.failure(.domainError))
+                    completion(.failure(.domainError))
                 }
                 return
             }

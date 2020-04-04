@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SafariServices
 class RepositoryCell: UITableViewCell {
     
     @IBOutlet weak var repoNameLabel: UILabel!
@@ -15,8 +14,9 @@ class RepositoryCell: UITableViewCell {
     @IBOutlet weak var forksCountLabel: UILabel!
 }
 
-class UserDetailViewController: UIViewController, SFSafariViewControllerDelegate {
+class UserDetailViewController: UIViewController {
     
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var bioLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
@@ -32,45 +32,60 @@ class UserDetailViewController: UIViewController, SFSafariViewControllerDelegate
     var repoArray: [UserRepositoryDetails] = []
     var reposURL: String?
     var userName: String?
+    var userDetails: UserDetails?
     override func viewDidLoad() {
         super.viewDidLoad()
-        guard let userID = userName else { return }
-        ServiceManager().fetchUserDetails(username: userID) { (result , error) in
-            
-            if error != nil {
-                print(error?.description ?? "")
-            } else {
-                DispatchQueue.global(qos: .background).async {
-                    guard let imageURL = result?.avatar_url, let url = URL(string:(imageURL)), let data = try? Data(contentsOf: url), let image: UIImage = UIImage(data: data) else { return }
-                    DispatchQueue.main.async {
-                        self.userImageView.image = image
-                    }
-                }
+        self.userImageView.layer.cornerRadius = 10
+        self.userImageView.layer.masksToBounds = true
+        updateUserDetails()
+        fetchUserRepoDetails()
+    }
     
-                DispatchQueue.main.async {
-                    self.usernameLabel.text = result?.login
-                    self.bioLabel.text = result?.bio ?? "Not Available"
-                    self.locationLabel.text = result?.location
-                    self.followersLabel.text = "\(result?.followers ?? 0)"
-                    self.followingLabel.text = "\(result?.following ?? 0)"
-                    self.emailLabel.text = result?.email ?? "Not Available"
-                    self.joinedLabel.text = result?.created_at ?? "Not Available"
-                }
+    // Display User Details
+    private func updateUserDetails() {
+        DispatchQueue.global(qos: .background).async {
+            guard let imageURL = self.userDetails?.avatar_url, let url = URL(string:(imageURL)), let data = try? Data(contentsOf: url), let image: UIImage = UIImage(data: data) else { return }
+            DispatchQueue.main.async {
+                self.userImageView.image = image
             }
         }
-        
+        self.usernameLabel.text = userDetails?.login
+        self.bioLabel.text = userDetails?.bio ?? "Not Available"
+        self.locationLabel.text = userDetails?.location
+        self.followersLabel.text = "\(userDetails?.followers ?? 0)"
+        self.followingLabel.text = "\(userDetails?.following ?? 0)"
+        self.emailLabel.text = userDetails?.email ?? "Not Available"
+        self.joinedLabel.text = formatDate(date: "2007-10-20T05:24:19Z") ?? "Not Available"
+    }
+    
+    // Fetch Repo Details
+    private func fetchUserRepoDetails() {
+        self.activityIndicator.startAnimating()
         ServiceManager().fetchRepoDetails(repoURLString: reposURL!) { (result , error) in
             if error != nil {
-                print(error?.description ?? "")
+                // Show Alert View
+                self.activityIndicator.stopAnimating()
+                self.showAlert(message: error?.description)
             } else {
-                guard let repoArray = result else { return }
-                self.filteredRepoArray = repoArray
-                self.repoArray = repoArray
+                if let repoArray = result {
+                    self.filteredRepoArray = repoArray
+                    self.repoArray = repoArray
+                }
                 DispatchQueue.main.async {
+                    self.activityIndicator.stopAnimating()
                     self.repositoryTableView.reloadData()
                 }
             }
         }
+    }
+    
+    // Date Formattter
+    private func formatDate(date : String) -> String? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        guard let newDate = dateFormatter.date(from: date) else { return "" }
+        dateFormatter.dateFormat = "MMM dd,yyyy"
+        return dateFormatter.string(from: newDate)
     }
 }
 
@@ -83,10 +98,10 @@ extension UserDetailViewController: UISearchBarDelegate  {
         } else {
             filteredRepoArray = repoArray
         }
-        print(filteredRepoArray.count)
         repositoryTableView.reloadData()
     }
 }
+
 //MARK: - UITableViewDataSource
 extension UserDetailViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -102,28 +117,33 @@ extension UserDetailViewController: UITableViewDataSource {
         cell.forksCountLabel.text = "\(filteredRepoArray[indexPath.row].forks_count ?? 0)"
         return cell
     }
+    
     func numberOfSections(in tableView: UITableView) -> Int
     {
-        var numOfSections: Int = 0
-        if filteredRepoArray.count > 0
-        {
-            tableView.separatorStyle = .singleLine
-            numOfSections            = 1
-            tableView.backgroundView = nil
+        if activityIndicator.isAnimating {
+            return 1
+        } else {
+            var numOfSections: Int = 0
+            if filteredRepoArray.count > 0
+            {
+                tableView.separatorStyle = .singleLine
+                numOfSections            = 1
+                tableView.backgroundView = nil
+            }
+            else
+            {
+                let noDataLabel: UILabel  = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
+                noDataLabel.text          = "No data available"
+                noDataLabel.textColor     = UIColor.black
+                noDataLabel.textAlignment = .center
+                tableView.backgroundView  = noDataLabel
+                tableView.separatorStyle  = .none
+            }
+            return numOfSections
         }
-        else
-        {
-            let noDataLabel: UILabel  = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
-            noDataLabel.text          = "No data available"
-            noDataLabel.textColor     = UIColor.black
-            noDataLabel.textAlignment = .center
-            tableView.backgroundView  = noDataLabel
-            tableView.separatorStyle  = .none
-        }
-        return numOfSections
     }
-    
 }
+
 //MARK: - UITableViewDelegate
 extension UserDetailViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

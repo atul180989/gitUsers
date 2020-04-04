@@ -10,9 +10,8 @@ import XCTest
 @testable import GithubDemoApp
 
 class GithubDemoAppTests: XCTestCase {
-
     override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+
     }
 
     override func tearDown() {
@@ -25,10 +24,5 @@ class GithubDemoAppTests: XCTestCase {
     }
 
     func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
     }
-
 }
