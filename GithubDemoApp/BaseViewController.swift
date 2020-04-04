@@ -26,7 +26,7 @@ class UserCell: UITableViewCell {
 }
 
 class BaseViewController: UIViewController {
-
+    
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var usersTable: UITableView!
     var filteredArray :[User] = []
@@ -47,10 +47,14 @@ class BaseViewController: UIViewController {
     }
     
     private func fetchUsers() {
-            ServiceManager().fetchUsers { (users, error) in
-            self.usersArray = users
-            self.filteredArray = users
-            self.fetchAllUserDetails()
+        ServiceManager().fetchUsers { (users, error) in
+            if error != nil {
+                print(error?.description ?? "")
+            } else {
+                self.usersArray = users
+                self.filteredArray = users
+                self.fetchAllUserDetails()
+            }
         }
     }
     
@@ -59,10 +63,15 @@ class BaseViewController: UIViewController {
         for user in filteredArray {
             myGroup.enter()
             guard let userName = user.login else { return }
-            ServiceManager.sharedInstance.fetchUserDetails(username: userName) { (userDetails, Error) in
-                guard let userInfo = userDetails else { return }
-                self.userdetailsArray.append(userInfo)
-                myGroup.leave()
+            ServiceManager.sharedInstance.fetchUserDetails(username: userName) { (userDetails, error) in
+                if error != nil {
+                    print(error?.description ?? "")
+                } else {
+                    guard let userInfo = userDetails else { return }
+                    self.userdetailsArray.append(userInfo)
+                    myGroup.leave()
+                    
+                }
             }
         }
         myGroup.notify(queue: .main) {
@@ -99,21 +108,21 @@ extension BaseViewController: UITableViewDataSource {
             cell.repoCountLabel.text = "\(userdetailsArray[indexPath.row].public_repos ?? 0)"
         }
         if let cachedImage = imageCache.object(forKey: NSString(string: (self.filteredArray[indexPath.row].login!))) {
-              cell.userImageView.image = cachedImage
+            cell.userImageView.image = cachedImage
         } else {
-              DispatchQueue.global(qos: .background).async {
-                  guard let imageURL = self.filteredArray[indexPath.row].avatar_url, let url = URL(string:(imageURL)), let data = try? Data(contentsOf: url), let image: UIImage = UIImage(data: data) else { return }
-                  self.imageCache.setObject(image, forKey: NSString(string: (self.filteredArray[indexPath.row].login!)))
-                  DispatchQueue.main.async {
-                       cell.userImageView.image = image
-                  }
-              }
+            DispatchQueue.global(qos: .background).async {
+                guard let imageURL = self.filteredArray[indexPath.row].avatar_url, let url = URL(string:(imageURL)), let data = try? Data(contentsOf: url), let image: UIImage = UIImage(data: data) else { return }
+                self.imageCache.setObject(image, forKey: NSString(string: (self.filteredArray[indexPath.row].login!)))
+                DispatchQueue.main.async {
+                    cell.userImageView.image = image
+                }
+            }
         }
         DispatchQueue.global(qos: .background).async {
             guard let imageURL = self.filteredArray[indexPath.row].avatar_url, let url = URL(string:(imageURL)), let data = try? Data(contentsOf: url), let image: UIImage = UIImage(data: data) else { return }
             self.imageCache.setObject(image, forKey: NSString(string: (self.filteredArray[indexPath.row].login!)))
             DispatchQueue.main.async {
-                 cell.userImageView.image = image
+                cell.userImageView.image = image
             }
         }
         return cell

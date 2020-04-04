@@ -16,7 +16,7 @@ class RepositoryCell: UITableViewCell {
 }
 
 class UserDetailViewController: UIViewController, SFSafariViewControllerDelegate {
-
+    
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var bioLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
@@ -36,30 +36,39 @@ class UserDetailViewController: UIViewController, SFSafariViewControllerDelegate
         super.viewDidLoad()
         guard let userID = userName else { return }
         ServiceManager().fetchUserDetails(username: userID) { (result , error) in
-            DispatchQueue.global(qos: .background).async {
-                guard let imageURL = result?.avatar_url, let url = URL(string:(imageURL)), let data = try? Data(contentsOf: url), let image: UIImage = UIImage(data: data) else { return }
-                DispatchQueue.main.async {
-                     self.userImageView.image = image
+            
+            if error != nil {
+                print(error?.description ?? "")
+            } else {
+                DispatchQueue.global(qos: .background).async {
+                    guard let imageURL = result?.avatar_url, let url = URL(string:(imageURL)), let data = try? Data(contentsOf: url), let image: UIImage = UIImage(data: data) else { return }
+                    DispatchQueue.main.async {
+                        self.userImageView.image = image
+                    }
                 }
-            }
-
-            DispatchQueue.main.async {
-                self.usernameLabel.text = result?.login
-                self.bioLabel.text = result?.bio ?? "Not Available"
-                self.locationLabel.text = result?.location
-                self.followersLabel.text = "\(result?.followers ?? 0)"
-                self.followingLabel.text = "\(result?.following ?? 0)"
-                self.emailLabel.text = result?.email ?? "Not Available"
-                self.joinedLabel.text = result?.created_at ?? "Not Available"
+    
+                DispatchQueue.main.async {
+                    self.usernameLabel.text = result?.login
+                    self.bioLabel.text = result?.bio ?? "Not Available"
+                    self.locationLabel.text = result?.location
+                    self.followersLabel.text = "\(result?.followers ?? 0)"
+                    self.followingLabel.text = "\(result?.following ?? 0)"
+                    self.emailLabel.text = result?.email ?? "Not Available"
+                    self.joinedLabel.text = result?.created_at ?? "Not Available"
+                }
             }
         }
         
         ServiceManager().fetchRepoDetails(repoURLString: reposURL!) { (result , error) in
-            guard let repoArray = result else { return }
-            self.filteredRepoArray = repoArray
-            self.repoArray = repoArray
-            DispatchQueue.main.async {
-                self.repositoryTableView.reloadData()
+            if error != nil {
+                print(error?.description ?? "")
+            } else {
+                guard let repoArray = result else { return }
+                self.filteredRepoArray = repoArray
+                self.repoArray = repoArray
+                DispatchQueue.main.async {
+                    self.repositoryTableView.reloadData()
+                }
             }
         }
     }
@@ -113,7 +122,7 @@ extension UserDetailViewController: UITableViewDataSource {
         }
         return numOfSections
     }
-
+    
 }
 //MARK: - UITableViewDelegate
 extension UserDetailViewController: UITableViewDelegate {

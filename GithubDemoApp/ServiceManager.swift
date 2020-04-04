@@ -13,12 +13,24 @@ enum NetworkError: Error {
     case domainError
     case decodingError
     case none
+    
+    var description : String {
+        switch self {
+        case .decodingError:
+            return "Decoding Error"
+        case .none:
+            return "No Error"
+        case .domainError:
+        return "Domain Error"
+        }
+    }
+    
 }
 
 class ServiceManager {
     public static let sharedInstance = ServiceManager()
     
-    func getApiResult(url:String, completion: @escaping (Result<Data,NetworkError>) -> Void ) {
+    func getApiResult(url:String, completion: @escaping (Result<Data, NetworkError>) -> Void ) {
         guard let newURL = URL(string: url) else { return }
         URLSession.shared.dataTask(with: newURL) { (data, response, error) in
             
@@ -33,13 +45,13 @@ class ServiceManager {
     }
     
     
-    func fetchUsers(completion: @escaping (([User], NetworkError))-> Void) {
+    func fetchUsers(completion: @escaping (([User], NetworkError?))-> Void) {
         let urlForUsers = "https://api.github.com/users"
         getApiResult(url: urlForUsers) { (result) in
             switch result {
             case .success(let data):
                 if let jsonData = try? JSONDecoder().decode([User].self, from: data) {
-                    completion((jsonData, .none))
+                    completion((jsonData, NetworkError.none))
                 } else {
                     completion(([],.decodingError))
                 }
@@ -49,13 +61,13 @@ class ServiceManager {
         }
     }
     
-    func fetchUserDetails(username: String, completion: @escaping ((UserDetails?, NetworkError))-> Void) {
+    func fetchUserDetails(username: String, completion: @escaping ((UserDetails?, NetworkError?))-> Void) {
         let userDetailURL = "https://api.github.com/users/\(username)"
         getApiResult(url: userDetailURL) { (result) in
             switch result {
             case .success(let data):
                 if let jsonData = try? JSONDecoder().decode(UserDetails.self, from: data) {
-                    completion((jsonData, .none))
+                    completion((jsonData, NetworkError.none))
                 } else {
                     completion((nil,.decodingError))
                 }
@@ -65,12 +77,12 @@ class ServiceManager {
         }
     }
     
-    func fetchRepoDetails(repoURLString: String, completion: @escaping (([UserRepositoryDetails]?, NetworkError))-> Void) {
+    func fetchRepoDetails(repoURLString: String, completion: @escaping (([UserRepositoryDetails]?, NetworkError?))-> Void) {
         getApiResult(url: repoURLString) { (result) in
             switch result {
             case .success(let data):
                 if let jsonData = try? JSONDecoder().decode([UserRepositoryDetails].self, from: data) {
-                    completion((jsonData, .none))
+                    completion((jsonData, NetworkError.none))
                 } else {
                     completion((nil,.decodingError))
                 }
