@@ -67,7 +67,7 @@ class UserDetailViewController: UIViewController {
         viewModel.fetchRepoDetails(repoURLString: reposURL!) { (result , error) in
             if error != nil {
                 // Show Alert View
-    
+                
                 DispatchQueue.main.async {
                     self.activityIndicator.stopAnimating()
                     self.showAlert(message: error?.description)

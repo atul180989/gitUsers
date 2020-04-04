@@ -14,11 +14,11 @@ class GithubDemoAppTests: XCTestCase {
     override func setUp() {
         mockObject = MockUserServiceModelProtocol()
     }
-
+    
     override func tearDown() {
         mockObject = nil
     }
-
+    
     func testRepoObject() {
         mockObject.fetchRepoDetails(repoURLString: "https://github.com") { (results, error) in
             XCTAssertNil(error)
@@ -26,6 +26,7 @@ class GithubDemoAppTests: XCTestCase {
             XCTAssertTrue(results?.first?.forks_count == 0)
         }
     }
+    
     func testUserObject() {
         mockObject.fetchUsers { (users, error) in
             XCTAssertNil(error)
@@ -34,6 +35,7 @@ class GithubDemoAppTests: XCTestCase {
         }
         
     }
+    
     func testUserDetailsObject() {
         mockObject.fetchUserDetails(username: "Atul") { (result, error) in
             XCTAssertNil(error)
@@ -41,8 +43,6 @@ class GithubDemoAppTests: XCTestCase {
             XCTAssertTrue(result?.public_repos == 10)
         }
     }
-
-
 }
 
 class MockUserServiceModelProtocol : UserViewModelServiceProtocol {

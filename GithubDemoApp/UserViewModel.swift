@@ -24,7 +24,7 @@ class UserViewModel: UserViewModelServiceProtocol {
             }
         }
     }
-
+    
     func fetchUserDetails(username: String, completion: @escaping ((UserDetails?, NetworkError?))-> Void) {
         let userDetailURL = "\(baseAPIURL)/\(username)"
         ServiceManager.sharedInstance.getApiResult(url: userDetailURL) { (result) in

@@ -34,7 +34,7 @@ class ServiceManager {
         guard let newURL = URL(string: url) else { return }
         let request = ServiceManager.sharedInstance.getURLRequest(url: newURL)
         URLSession.shared.dataTask(with: request) { (data, response, error) in
-        
+            
             guard let data = data, error == nil else {
                 if let error = error as NSError?, error.domain == NSURLErrorDomain {
                     completion(.failure(.domainError))

@@ -32,10 +32,4 @@ struct UserRepositoryDetails: Codable {
     var name: String?
     var clone_url: String?
 }
-/* Tapping on a user will bring up a screen that contains the profile details of that user. The view
-should contain their avatar image, username, number of followers, number of following,
-biography, email, location, join date, and a list of public repositories with a search bar at the top.
-Each item of the list view shall contain the name of the repository, the number of stars, and the
-number of forks. The search bar will allow the user to search through the user’s repository. The
-list view shall not be paginated. Additionally, the search will automatically update upon each
-letter entered.*/
+
