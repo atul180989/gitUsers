@@ -9,24 +9,31 @@
 import Foundation
 
 class UserViewModel: UserViewModelServiceProtocol {
-    
-    func fetchUsers(completion: @escaping (([User], NetworkError?))-> Void) {
-        ServiceManager.sharedInstance.getApiResult(url: baseAPIURL) { (result) in
+    var users: [User] = []
+    func fetchUsers(username: String, page: Int = 0, completion: @escaping (([User]?, NetworkError?))-> Void) {
+        let url =  baseAPIURL + "/search/users?q=" + username + "&page=\(page)"
+        ServiceManager.sharedInstance.getApiResult(url: url) { (result) in
             switch result {
             case .success(let data):
-                if let jsonData = try? JSONDecoder().decode([User].self, from: data) {
-                    completion((jsonData, nil))
+                if let jsonData = try? JSONDecoder().decode(GithubUsers.self, from: data) {
+                    if page == 0 {
+                        self.users = jsonData.items ?? []
+                        completion((self.users, nil))
+                    } else {
+                        self.users.append(contentsOf: jsonData.items ?? [])
+                        completion((self.users, nil))
+                    }
                 } else {
-                    completion(([],.limitExceedingError))
+                    completion((nil,.limitExceedingError))
                 }
             case .failure(let error):
-                completion(([], error))
+                completion((nil, error))
             }
         }
     }
     
     func fetchUserDetails(username: String, completion: @escaping ((UserDetails?, NetworkError?))-> Void) {
-        let userDetailURL = "\(baseAPIURL)/\(username)"
+        let userDetailURL = "\(baseAPIURL)/users/\(username)"
         ServiceManager.sharedInstance.getApiResult(url: userDetailURL) { (result) in
             switch result {
             case .success(let data):
@@ -60,5 +67,6 @@ class UserViewModel: UserViewModelServiceProtocol {
 protocol UserViewModelServiceProtocol : class {
     func fetchRepoDetails(repoURLString: String, completion: @escaping (([UserRepositoryDetails]?, NetworkError?))-> Void)
     func fetchUserDetails(username: String, completion: @escaping ((UserDetails?, NetworkError?))-> Void)
-    func fetchUsers(completion: @escaping (([User], NetworkError?))-> Void)
+    func fetchUsers(username: String, page: Int, completion: @escaping (([User]?, NetworkError?))-> Void)
 }
+ 

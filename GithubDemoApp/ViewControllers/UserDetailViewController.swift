@@ -46,19 +46,30 @@ class UserDetailViewController: UIViewController {
     
     // Display User Details
     private func updateUserDetails() {
-        DispatchQueue.global(qos: .background).async {
-            guard let imageURL = self.userDetails?.avatar_url, let url = URL(string:(imageURL)), let data = try? Data(contentsOf: url), let image: UIImage = UIImage(data: data) else { return }
-            DispatchQueue.main.async {
-                self.userImageView.image = image
-            }
-        }
-        self.usernameLabel.text = userDetails?.login
-        self.bioLabel.text = userDetails?.bio ?? "Not Available"
-        self.locationLabel.text = userDetails?.location ?? "Not Available"
-        self.followersLabel.text = "\(userDetails?.followers ?? 0)"
-        self.followingLabel.text = "\(userDetails?.following ?? 0)"
-        self.emailLabel.text = userDetails?.email ?? "Not Available"
-        self.joinedLabel.text = formatDate(date: "2007-10-20T05:24:19Z") ?? "Not Available"
+        
+        viewModel.fetchUserDetails(username: userName!) { (userDetails, error) in
+                        if error != nil {
+                            
+                        } else {
+                            self.userDetails = userDetails
+                            DispatchQueue.main.async {
+                                self.usernameLabel.text = userDetails?.login
+                                self.bioLabel.text = userDetails?.bio ?? "Not Available"
+                                self.locationLabel.text = userDetails?.location ?? "Not Available"
+                                self.followersLabel.text = "\(userDetails?.followers ?? 0)"
+                                self.followingLabel.text = "\(userDetails?.following ?? 0)"
+                                self.emailLabel.text = userDetails?.email ?? "Not Available"
+                                self.joinedLabel.text = self.formatDate(date: (userDetails?.created_at) ?? "") ?? "Not Available"
+
+                            }
+                            DispatchQueue.global(qos: .background).async {
+                                guard let imageURL = self.userDetails?.avatar_url, let url = URL(string:(imageURL)), let data = try? Data(contentsOf: url), let image: UIImage = UIImage(data: data) else { return }
+                                DispatchQueue.main.async {
+                                    self.userImageView.image = image
+                                }
+                            }
+                        }
+                    }
     }
     
     // Fetch Repo Details

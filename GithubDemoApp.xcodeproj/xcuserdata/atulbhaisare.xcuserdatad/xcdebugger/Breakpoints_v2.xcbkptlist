@@ -23,65 +23,49 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "5B0EABC2-8B4F-42C2-BE4B-A5C5C6FD5F0C"
+            uuid = "CD85D131-6DAD-4FE3-8302-A5ABC499D0F2"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "GithubDemoApp/ViewControllers/UserDetailViewController.swift"
+            filePath = "GithubDemoApp/UserViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "44"
-            endingLineNumber = "44"
-            landmarkName = "viewDidLoad()"
+            startingLineNumber = "30"
+            endingLineNumber = "30"
+            landmarkName = "fetchUsers(username:page:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "F71C089D-B5D8-4485-BB7E-30E76502E8AD"
+            uuid = "C1411ACA-BA9D-43E6-844F-5B6C744F3A1E"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "GithubDemoApp/ViewControllers/UserDetailViewController.swift"
+            filePath = "GithubDemoApp/ViewControllers/BaseViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "67"
-            endingLineNumber = "67"
-            landmarkName = "fetchUserRepoDetails()"
+            startingLineNumber = "79"
+            endingLineNumber = "79"
+            landmarkName = "searchBar(_:textDidChange:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "F71C089D-B5D8-4485-BB7E-30E76502E8AD - 8d606d4f63ff3629"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "GithubDemoApp.UserDetailViewController.(fetchUserRepoDetails in _9D87880822497F20B4D76B08D40FBC91)() -&gt; ()"
-                  moduleName = "GithubDemoApp"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/atulbhaisare/Documents/TMobile/GithubDemoApp/GithubDemoApp/ViewControllers/UserDetailViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "67"
-                  endingLineNumber = "67"
-                  offsetFromSymbolStart = "253">
-               </Location>
-               <Location
-                  uuid = "F71C089D-B5D8-4485-BB7E-30E76502E8AD - b8016ded610c38d8"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;Swift.Array&lt;GithubDemoApp.UserRepositoryDetails&gt;&gt;, Swift.Optional&lt;GithubDemoApp.NetworkError&gt;) -&gt; () in GithubDemoApp.UserDetailViewController.(fetchUserRepoDetails in _9D87880822497F20B4D76B08D40FBC91)() -&gt; ()"
-                  moduleName = "GithubDemoApp"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/atulbhaisare/Documents/TMobile/GithubDemoApp/GithubDemoApp/ViewControllers/UserDetailViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "68"
-                  endingLineNumber = "68"
-                  offsetFromSymbolStart = "212">
-               </Location>
-            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "48719F27-1801-4F39-9542-488C409AE610"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "GithubDemoApp/ViewControllers/BaseViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "61"
+            endingLineNumber = "61"
+            landmarkName = "fetchUsers(_:_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

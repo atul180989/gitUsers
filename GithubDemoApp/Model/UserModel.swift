@@ -8,6 +8,10 @@
 
 import Foundation
 
+struct GithubUsers: Codable {
+    var items: [User]?
+}
+
 struct User: Codable {
     var login: String?
     var avatar_url: String?

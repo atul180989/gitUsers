@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-let baseAPIURL = "https://api.github.com/users"
+let baseAPIURL = "https://api.github.com"
 
 enum NetworkError: Error {
     case domainError
@@ -48,7 +48,7 @@ class ServiceManager {
     func getURLRequest(url: URL) -> URLRequest {
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
-        request.setValue("token 4ac7925fd75f7d4ea0b00cf343eee778eb5d6b98", forHTTPHeaderField: "Authorization")
+        request.setValue("token 8ee85e9fdd3761686d4d2736d74404b0e9c1fcaa", forHTTPHeaderField: "Authorization")
         return request
     }
 }
