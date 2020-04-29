@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import SDWebImage
+
 class RepositoryCell: UITableViewCell {
     
     @IBOutlet weak var repoNameLabel: UILabel!
@@ -54,12 +56,12 @@ class UserDetailViewController: UIViewController {
                             self.userDetails = userDetails
                             DispatchQueue.main.async {
                                 self.usernameLabel.text = userDetails?.login
-                                self.bioLabel.text = userDetails?.bio ?? "Not Available"
-                                self.locationLabel.text = userDetails?.location ?? "Not Available"
+                                self.bioLabel.text = userDetails?.bio ?? notAvailable
+                                self.locationLabel.text = userDetails?.location ?? notAvailable
                                 self.followersLabel.text = "\(userDetails?.followers ?? 0)"
                                 self.followingLabel.text = "\(userDetails?.following ?? 0)"
-                                self.emailLabel.text = userDetails?.email ?? "Not Available"
-                                self.joinedLabel.text = self.formatDate(date: (userDetails?.created_at) ?? "") ?? "Not Available"
+                                self.emailLabel.text = userDetails?.email ?? notAvailable
+                                self.joinedLabel.text = self.formatDate(date: (userDetails?.created_at) ?? "") ?? notAvailable
 
                             }
                             DispatchQueue.global(qos: .background).async {
@@ -150,7 +152,7 @@ extension UserDetailViewController: UITableViewDataSource {
             else
             {
                 let noDataLabel: UILabel  = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
-                noDataLabel.text          = "No data available"
+                noDataLabel.text          = noData
                 noDataLabel.textColor     = UIColor.black
                 noDataLabel.textAlignment = .center
                 tableView.backgroundView  = noDataLabel

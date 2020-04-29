@@ -9,8 +9,6 @@
 import Foundation
 import UIKit
 
-let baseAPIURL = "https://api.github.com"
-
 enum NetworkError: Error {
     case domainError
     case limitExceedingError

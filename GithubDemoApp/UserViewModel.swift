@@ -12,16 +12,16 @@ class UserViewModel: UserViewModelServiceProtocol {
     var users: [User] = []
     func fetchUsers(username: String, page: Int = 0, completion: @escaping (([User]?, NetworkError?))-> Void) {
         let url =  baseAPIURL + "/search/users?q=" + username + "&page=\(page)"
-        ServiceManager.sharedInstance.getApiResult(url: url) { (result) in
+        ServiceManager.sharedInstance.getApiResult(url: url) { [weak self] result in
             switch result {
             case .success(let data):
                 if let jsonData = try? JSONDecoder().decode(GithubUsers.self, from: data) {
                     if page == 0 {
-                        self.users = jsonData.items ?? []
-                        completion((self.users, nil))
+                        self?.users = jsonData.items ?? []
+                        completion((self?.users, nil))
                     } else {
-                        self.users.append(contentsOf: jsonData.items ?? [])
-                        completion((self.users, nil))
+                        self?.users.append(contentsOf: jsonData.items ?? [])
+                        completion((self?.users, nil))
                     }
                 } else {
                     completion((nil,.limitExceedingError))
@@ -34,7 +34,7 @@ class UserViewModel: UserViewModelServiceProtocol {
     
     func fetchUserDetails(username: String, completion: @escaping ((UserDetails?, NetworkError?))-> Void) {
         let userDetailURL = "\(baseAPIURL)/users/\(username)"
-        ServiceManager.sharedInstance.getApiResult(url: userDetailURL) { (result) in
+        ServiceManager.sharedInstance.getApiResult(url: userDetailURL) {  result in
             switch result {
             case .success(let data):
                 if let jsonData = try? JSONDecoder().decode(UserDetails.self, from: data) {

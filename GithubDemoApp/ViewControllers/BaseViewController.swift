@@ -36,18 +36,17 @@ class BaseViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var usersTable: UITableView!
-    var filteredArray :[User] = []
-    var userdetailsArray: [UserDetails] = []
-    var filteredUserDetailsArray: [UserDetails] = []
-    let imageCache = NSCache<NSString, UIImage>()
+    lazy var filteredArray :[User] = []
+    lazy var userdetailsArray: [UserDetails] = []
+    lazy var filteredUserDetailsArray: [UserDetails] = []
     var viewModel: UserViewModel!
     var searchText = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel = UserViewModel()
-        self.title = "GitHub Users"
-        searchBar.placeholder = "Search User"
+        self.title = baseVCTitle
+        searchBar.placeholder = searchBarPlaceHolder
     }
     
     private func fetchUsers(_ username: String, _ page: Int) {
@@ -75,8 +74,12 @@ extension BaseViewController: UISearchBarDelegate  {
             page = 0
             self.filteredArray.removeAll()
         }
-        self.searchText = searchText
-        fetchUsers(searchText, 0)
+        self.searchText = searchText.replacingOccurrences(of: " ", with: "")
+        fetchUsers(self.searchText, 0)
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
     }
 }
 //MARK: - UITableViewDataSource
@@ -99,12 +102,8 @@ extension BaseViewController: UITableViewDataSource {
                     cell.repoCountLabel.text = "\(repo.count)"
                 }
             }
-            DispatchQueue.global(qos: .background).async {
-                guard let imageURL = self.filteredArray[indexPath.row].avatar_url, let url = URL(string:(imageURL)), let data = try? Data(contentsOf: url), let image: UIImage = UIImage(data: data) else { return }
-                DispatchQueue.main.async {
-                    cell.userImageView.image = image
-                }
-            }
+            guard let imageURL = self.filteredArray[indexPath.row].avatar_url, let url = URL(string:(imageURL)) else { return UITableViewCell()  }
+            cell.userImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "avatar.jpg"))
         }
         return cell
     }
@@ -130,8 +129,8 @@ extension BaseViewController: UITableViewDelegate {
 
 extension UIViewController {
     func showAlert(message: String?) {
-        let alertController = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        let alertController = UIAlertController(title: error, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: ok, style: .default, handler: nil)
         alertController.addAction(okAction)
         self.present(alertController, animated: true, completion: nil)
     }
